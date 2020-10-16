@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100307598613",
+    "firebase_url": "https://monitoredwellbeing.firebaseio.com",
+    "project_id": "monitoredwellbeing",
+    "storage_bucket": "monitoredwellbeing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100307598613:android:dc802607fd7aeeffd93d1c",
+        "android_client_info": {
+          "package_name": "com.ciu196.android.monitored_wellbeing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100307598613-64v0l6ujvm393gc3s54jsjkrfm2ptvpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqX8zh97CUM35p5uMjs49p_eMU0USP2dM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100307598613-64v0l6ujvm393gc3s54jsjkrfm2ptvpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
