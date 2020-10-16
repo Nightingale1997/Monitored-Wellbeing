@@ -28,6 +28,9 @@
         <action
                 android:id="@+id/action_mainFragment_to_settingsFragment"
                 app:destination="@id/settingsFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_challengeFragment"
+            app:destination="@id/challengeFragment" />
     </fragment>
     <fragment
             android:id="@+id/settingsFragment"
@@ -39,4 +42,8 @@
             android:name="com.ciu196.android.monitored_wellbeing.LoginFragment"
             android:label="fragment_login"
             tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/challengeFragment"
+        android:name="com.ciu196.android.monitored_wellbeing.ChallengeFragment"
+        android:label="ChallengeFragment" />
 </navigation>
