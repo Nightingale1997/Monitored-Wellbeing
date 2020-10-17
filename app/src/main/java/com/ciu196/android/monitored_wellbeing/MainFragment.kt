@@ -18,6 +18,7 @@ package com.ciu196.android.monitored_wellbeing
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.PixelFormat
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment

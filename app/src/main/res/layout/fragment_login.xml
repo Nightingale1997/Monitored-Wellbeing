@@ -20,28 +20,29 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".LoginFragment">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fui_ic_googleg_color_24dp"
+        tools:context=".LoginFragment">
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp"
-                android:text="@string/login_prompt"
-                android:textAlignment="center"
-                android:textSize="30sp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:text="@string/login_prompt"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
         <TextView
-                android:id="@+id/auth_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorAccent"
-                android:padding="10dp"
-                android:text="@string/login_btn"
-                android:textColor="@color/white"
-                android:textSize="26sp"/>
+            android:id="@+id/auth_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:padding="10dp"
+            android:text="@string/login_btn"
+            android:textColor="@color/white"
+            android:textSize="26sp" />
     </FrameLayout>
 </layout>

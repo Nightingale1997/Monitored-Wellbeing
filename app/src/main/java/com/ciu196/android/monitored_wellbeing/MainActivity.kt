@@ -16,12 +16,14 @@
 
 package com.ciu196.android.monitored_wellbeing
 
+import android.graphics.PixelFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        getWindow().setFormat(PixelFormat.RGBA_8888);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
