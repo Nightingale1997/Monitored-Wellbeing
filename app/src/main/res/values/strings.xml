@@ -31,4 +31,15 @@
 
     <!--Shared Preference Keys -->
     <string name="preference_fact_type_key">fact_type_pref</string>
+    <string name="check_in">CHECK-IN</string>
+
+    <string name="output_hint">Please place your finger on the device\'s camera, covering the flash as well.</string>
+    <string name="separator">,</string>
+    <string name="row_separator">\n</string>
+    <string name="raw_values">Measurements (Timestamp, Value)</string>
+    <plurals name="measurement_output_template">
+        <item quantity="zero">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>
+        <item quantity="one">Pulse: %2.1f (%d cycle in %2.1f seconds)</item>
+        <item quantity="other">Pulse: %2.1f (%d cycles in %2.1f seconds)</item>
+    </plurals>
 </resources>
