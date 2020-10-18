@@ -1,6 +1,8 @@
 package com.ciu196.android.monitored_wellbeing
 
+import User
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +11,24 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ciu196.android.monitored_wellbeing.databinding.FragmentChallengeBinding
-import com.ciu196.android.monitored_wellbeing.databinding.FragmentLoginBinding
-import com.ciu196.android.monitored_wellbeing.databinding.FragmentMainBinding
-import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.math.log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 class ChallengeFragment : Fragment() {
+    companion object {
+        const val TAG = "ChallengeFragment"
+    }
+
+
+    // Write a message to the database
+    private lateinit var database: DatabaseReference
+// ...
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
@@ -24,7 +37,25 @@ class ChallengeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        database = Firebase.database.getReference()
 
+        database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user: User? = dataSnapshot.getValue(User::class.java)
+                    if (user != null){
+                        val name: String? = user.name // "John Doe"
+                        val points: Int? = user.points // "Texas"
+                        binding.userPoints.text = points.toString()
+                    }
+                    else{
+                        writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
+                    }
+
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
         binding.checkinButton.setOnClickListener {
@@ -35,10 +66,18 @@ class ChallengeFragment : Fragment() {
     }
 
 
+    private fun writeNewUser(userId: String, name: String, points: Int?) {
+        val user = User(name, points)
+        database.child("users").child(userId).setValue(user)
+    }
+
     /**
      * Observes the authentication state and changes the UI accordingly.
      * If there is a logged in user: (1) show a logout button and (2) display their name.
      * If there is no logged in user: show a login button
      */
+
+    // Read from the database
+
 }
 
