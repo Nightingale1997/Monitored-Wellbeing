@@ -47,22 +47,18 @@
         android:name="com.ciu196.android.monitored_wellbeing.ChallengeFragment"
         android:label="ChallengeFragment" >
         <action
-            android:id="@+id/action_challengeFragment_to_heartrateFragment"
-            app:destination="@id/heartrateFragment" />
-        <action
             android:id="@+id/action_challengeFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
-    </fragment>
-    <fragment
-        android:id="@+id/heartrateFragment"
-        android:name="com.ciu196.android.monitored_wellbeing.HeartrateFragment"
-        android:label="HeartrateFragment" >
         <action
-            android:id="@+id/action_heartrateFragment_to_challengeFragment"
-            app:destination="@id/challengeFragment" />
+            android:id="@+id/action_challengeFragment_to_heartrateFragment"
+            app:destination="@id/heartrateFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.ciu196.android.heartbeat.MainActivity"
         android:label="MainActivity" />
+    <fragment
+        android:id="@+id/heartrateFragment"
+        android:name="com.ciu196.android.heartbeat.HeartrateFragment"
+        android:label="HeartrateFragment" />
 </navigation>

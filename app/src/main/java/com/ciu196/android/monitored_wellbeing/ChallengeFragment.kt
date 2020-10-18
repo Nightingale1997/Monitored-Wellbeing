@@ -13,6 +13,7 @@ import com.ciu196.android.monitored_wellbeing.databinding.FragmentLoginBinding
 import com.ciu196.android.monitored_wellbeing.databinding.FragmentMainBinding
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.math.log
 
 class ChallengeFragment : Fragment() {
 
@@ -27,7 +28,7 @@ class ChallengeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
         binding.checkinButton.setOnClickListener {
-            val action = ChallengeFragmentDirections.actionChallengeFragmentToMainActivity();
+            val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment();
             findNavController().navigate(action)
         }
         return binding.root

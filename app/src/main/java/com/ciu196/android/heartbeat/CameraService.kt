@@ -9,9 +9,10 @@ import android.os.HandlerThread
 import android.util.Log
 import android.view.Surface
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
 import java.util.*
 
-internal class CameraService(private val activity: Activity) {
+internal class CameraService(private val activity: FragmentActivity) {
     private var cameraId: String = "null"
     private var cameraDevice: CameraDevice? = null
     private var previewSession: CameraCaptureSession? = null

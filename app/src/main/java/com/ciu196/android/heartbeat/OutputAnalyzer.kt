@@ -11,9 +11,10 @@ import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureView);
-    (private val activity: Activity, graphTextureView: TextureView?) {
+    (private val activity: Activity) {
 
     //private final ChartDrawer chartDrawer;
+
     private var store: MeasureStore? = null
     private val measurementInterval = 45
     private val measurementLength =
