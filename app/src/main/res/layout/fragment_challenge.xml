@@ -10,7 +10,7 @@
         android:background="@drawable/challenge_background">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/checkinButton"
             android:layout_width="411dp"
             android:layout_height="55dp"
             android:background="@drawable/button_gradient"

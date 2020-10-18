@@ -26,7 +26,10 @@ class ChallengeFragment : Fragment() {
 
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
-
+        binding.checkinButton.setOnClickListener {
+            val action = ChallengeFragmentDirections.actionChallengeFragmentToMainActivity();
+            findNavController().navigate(action)
+        }
         return binding.root
     }
 
