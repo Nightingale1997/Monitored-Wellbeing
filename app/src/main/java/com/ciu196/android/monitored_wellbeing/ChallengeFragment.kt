@@ -49,7 +49,7 @@ class ChallengeFragment : Fragment() {
                         binding.userPoints.text = points.toString()
                     }
                     else{
-                        writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
+                        Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
                     }
 
                 }
@@ -66,10 +66,7 @@ class ChallengeFragment : Fragment() {
     }
 
 
-    private fun writeNewUser(userId: String, name: String, points: Int?) {
-        val user = User(name, points)
-        database.child("users").child(userId).setValue(user)
-    }
+
 
     /**
      * Observes the authentication state and changes the UI accordingly.

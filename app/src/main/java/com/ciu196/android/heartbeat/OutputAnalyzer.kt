@@ -1,5 +1,6 @@
 package com.ciu196.android.heartbeat
 
+import User
 import android.app.Activity
 import android.os.CountDownTimer
 import android.view.TextureView
@@ -7,6 +8,13 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.ciu196.android.monitored_wellbeing.R
+import com.ciu196.android.monitored_wellbeing.Utils
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -124,6 +132,25 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
                 if (bpm < 80) {
                     currentValue += "Failed $bpm"
                 }
+                else{
+                    val database = Firebase.database.getReference()
+
+                    database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
+                        object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                val user: User? = dataSnapshot.getValue(User::class.java)
+                                if (user != null){
+                                    val name: String? = user.name // "John Doe"
+                                    val points: Int? = user.points // "Texas"
+                                    Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, points!!+100)
+                                }
+
+
+                            }
+
+                            override fun onCancelled(databaseError: DatabaseError) {}
+                        })
+                }
                 (activity.findViewById<View>(R.id.textView) as TextView).text = currentValue
                 val returnValueSb = StringBuilder()
                 returnValueSb.append(currentValue)
@@ -165,7 +192,11 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
                     returnValueSb.append(activity.getString(R.string.row_separator));
                 }
 
-                 */(activity.findViewById<View>(R.id.editText) as EditText).setText(
+                 */
+
+
+
+                (activity.findViewById<View>(R.id.editText) as EditText).setText(
                     returnValueSb.toString()
                 )
                 cameraService.stop()
