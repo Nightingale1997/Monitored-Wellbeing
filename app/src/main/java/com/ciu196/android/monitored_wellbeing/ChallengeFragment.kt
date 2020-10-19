@@ -59,7 +59,8 @@ class ChallengeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
         binding.checkinButton.setOnClickListener {
-            val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment();
+            //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
+            val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
             findNavController().navigate(action)
         }
         return binding.root

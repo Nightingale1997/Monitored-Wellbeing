@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.treasureHunt
+package com.example.android.geofence
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle

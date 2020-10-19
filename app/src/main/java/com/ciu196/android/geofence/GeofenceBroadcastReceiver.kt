@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.treasureHunt
+package com.example.android.geofence
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.example.android.treasureHunt.HuntMainActivity.Companion.ACTION_GEOFENCE_EVENT
-import com.google.android.gms.common.GooglePlayServicesUtil.getErrorString
 import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofenceStatusCodes
 import com.google.android.gms.location.GeofencingEvent
 
 /*

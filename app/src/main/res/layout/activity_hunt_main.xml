@@ -22,7 +22,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.example.android.treasureHunt.GeofenceViewModel" />
+            type="com.example.android.geofence.GeofenceViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
         android:keepScreenOn="true"
         android:layout_marginTop="@dimen/vertical_margin"
         android:layout_marginBottom="@dimen/vertical_margin"
-        tools:context="com.example.android.treasureHunt.MapsMainActivity">
+        tools:context="com.example.android.geofence.MapsMainActivity">
 
         <TextView
             android:id="@+id/hintTextView"
