@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +14,6 @@ import com.ciu196.android.monitored_wellbeing.LoginViewModel
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.Utils
 import com.ciu196.android.monitored_wellbeing.databinding.FragmentShopBinding
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+
 
 class ShopFragment : Fragment() {
     companion object {
@@ -38,6 +40,7 @@ class ShopFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
         database = Firebase.database.getReference()
 
         database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
@@ -46,14 +49,10 @@ class ShopFragment : Fragment() {
                     val user: User? = dataSnapshot.getValue(User::class.java)
                     if (user != null){
                         val points: Int? = user.points // "Texas"
-                        //binding.userPoints.text = points.toString()
+                        binding.available.text = points.toString()
                     }
                     else{
-                        Utils.writeNewUser(
-                            FirebaseAuth.getInstance().currentUser!!.uid,
-                            FirebaseAuth.getInstance().currentUser!!.displayName!!,
-                            0
-                        )
+                        Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
                     }
 
                 }
@@ -62,7 +61,16 @@ class ShopFragment : Fragment() {
             })
 
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_points, container, false)
+            R.layout.fragment_shop, container, false)
+
+        val gv = binding.gridview
+
+        gv.setAdapter(ImageAdapter(requireActivity()))
+        gv.onItemClickListener =
+            OnItemClickListener { parent, v, position, id ->
+                Toast.makeText(requireActivity(), "Image Position: $position", Toast.LENGTH_SHORT)
+                    .show()
+            }
         /*binding.navigationChallenges.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
             val action = PointsFragmentDirections.actionPointsFragmentToChallengeFragment()

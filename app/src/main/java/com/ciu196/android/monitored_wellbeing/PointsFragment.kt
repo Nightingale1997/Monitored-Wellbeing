@@ -57,6 +57,13 @@ class PointsFragment : Fragment() {
             })
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_points, container, false)
+
+        binding.rewardButton.setOnClickListener {
+            //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
+            val action = PointsFragmentDirections.actionPointsFragmentToShopFragment()
+            findNavController().navigate(action)
+        }
+
         binding.navigationChallenges.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
             val action = PointsFragmentDirections.actionPointsFragmentToChallengeFragment()

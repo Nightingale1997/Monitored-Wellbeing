@@ -37,26 +37,6 @@ class ChallengeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        database = Firebase.database.getReference()
-
-        database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val user: User? = dataSnapshot.getValue(User::class.java)
-                    if (user != null){
-                        val name: String? = user.name // "John Doe"
-                        val points: Int? = user.points // "Texas"
-                        binding.userPoints.text = points.toString()
-                    }
-                    else{
-                        Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
-                    }
-
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {}
-            })
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
         binding.checkinButton.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()

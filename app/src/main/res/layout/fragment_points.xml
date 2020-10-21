@@ -17,12 +17,12 @@
             android:text="0"
             android:textColor="@color/white"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/checkinButton"
+            app:layout_constraintBottom_toTopOf="@+id/rewardButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/checkinButton"
+            android:id="@+id/rewardButton"
             android:layout_width="411dp"
             android:layout_height="55dp"
             android:background="@drawable/button_gradient"

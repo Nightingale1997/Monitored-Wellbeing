@@ -68,5 +68,16 @@
         <action
             android:id="@+id/action_pointsFragment_to_challengeFragment"
             app:destination="@id/challengeFragment" />
+        <action
+            android:id="@+id/action_pointsFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.ciu196.android.shop.ShopFragment"
+        android:label="ShopFragment" >
+        <action
+            android:id="@+id/action_shopFragment_to_pointsFragment"
+            app:destination="@id/pointsFragment" />
     </fragment>
 </navigation>

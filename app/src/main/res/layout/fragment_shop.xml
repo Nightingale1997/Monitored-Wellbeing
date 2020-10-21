@@ -19,37 +19,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Data to make available to the XML via data binding. In this case,
-         the whole ViewModel, so that we can access the LiveData,
-         click handlers, and state variables. -->
-    <data>
-
-        <variable
-            name="sleepTrackerViewModel"
-            type="com.example.android.trackmysleepquality.sleeptracker.SleepTrackerViewModel" />
-    </data>
 
     <!-- Start of the visible fragment layout using ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".sleeptracker.SleepTrackerFragment">
+        android:background="@drawable/shop_background">
 
-        <!-- This lesson we will switch to RecyclerView to properly
-         display the sleep data-->
+        <TextView
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="X"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sleep_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/currentPoint"
+            android:textColor="@color/blueText"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- With data binding and LiveData, we can track the buttons' visibility states
-             from the ViewModel. The click handler is in the ViewModel as well, and
-             you can set it for the Views using this lambda pattern. -->
+        <TextView
+            android:id="@+id/available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="414dp"
+            android:layout_height="556dp"
+            android:layout_marginTop="35dp"
+            android:columnWidth="110dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/available" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
