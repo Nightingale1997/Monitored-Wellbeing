@@ -20,4 +20,5 @@
     <color name="colorPrimaryDark">#090e17</color>
     <color name="colorAccent">#4bb6eb</color>
     <color name="white">#FFFFFF</color>
+    <color name="blueText">#375180</color>
 </resources>

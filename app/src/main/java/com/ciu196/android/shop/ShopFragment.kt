@@ -1,28 +1,29 @@
-package com.ciu196.android.monitored_wellbeing
+package com.ciu196.android.shop
 
 import User
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.ciu196.android.monitored_wellbeing.databinding.FragmentChallengeBinding
+import com.ciu196.android.monitored_wellbeing.LoginViewModel
+import com.ciu196.android.monitored_wellbeing.R
+import com.ciu196.android.monitored_wellbeing.Utils
+import com.ciu196.android.monitored_wellbeing.databinding.FragmentShopBinding
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
-class ChallengeFragment : Fragment() {
+class ShopFragment : Fragment() {
     companion object {
-        const val TAG = "ChallengeFragment"
+        const val TAG = "PointsFragment"
     }
 
 
@@ -32,7 +33,7 @@ class ChallengeFragment : Fragment() {
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
-    private lateinit var binding: FragmentChallengeBinding
+    private lateinit var binding: FragmentShopBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,12 +45,15 @@ class ChallengeFragment : Fragment() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val user: User? = dataSnapshot.getValue(User::class.java)
                     if (user != null){
-                        val name: String? = user.name // "John Doe"
                         val points: Int? = user.points // "Texas"
-                        binding.userPoints.text = points.toString()
+                        //binding.userPoints.text = points.toString()
                     }
                     else{
-                        Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, 0)
+                        Utils.writeNewUser(
+                            FirebaseAuth.getInstance().currentUser!!.uid,
+                            FirebaseAuth.getInstance().currentUser!!.displayName!!,
+                            0
+                        )
                     }
 
                 }
@@ -57,18 +61,13 @@ class ChallengeFragment : Fragment() {
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_challenge, container, false)
-        binding.checkinButton.setOnClickListener {
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_points, container, false)
+        /*binding.navigationChallenges.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
-            val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
+            val action = PointsFragmentDirections.actionPointsFragmentToChallengeFragment()
             findNavController().navigate(action)
-        }
-
-        binding.navigationPoints.setOnClickListener {
-            //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
-            val action = ChallengeFragmentDirections.actionChallengeFragmentToPointsFragment()
-            findNavController().navigate(action)
-        }
+        }*/
         return binding.root
     }
 
