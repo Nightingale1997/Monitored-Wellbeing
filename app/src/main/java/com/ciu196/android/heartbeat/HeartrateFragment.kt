@@ -26,13 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class HeartrateFragment : Fragment() {
 
-    private val geofencePendingIntent: PendingIntent by lazy {
-        val intent = Intent(requireActivity(), GeofenceBroadcastReceiver::class.java)
-        intent.action = MainActivity.ACTION_GEOFENCE_EVENT
-        // Use FLAG_UPDATE_CURRENT so that you get the same pending intent back when calling
-        // addGeofences() and removeGeofences().
-        PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-    }
+
     companion object {
         const val TAG = "heartrateFragment"
     }
@@ -108,34 +102,8 @@ class HeartrateFragment : Fragment() {
 
 
 
-    class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
-
-        // ...
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val geofencingEvent = GeofencingEvent.fromIntent(intent)
-            if (geofencingEvent.hasError()) {
-                val errorMessage = errorMessage(context!!,geofencingEvent.errorCode)
-                Log.e(TAG, errorMessage)
-                return
-            }
-
-            // Get the transition type.
-            val geofenceTransition = geofencingEvent.geofenceTransition
-            Log.i(TAG, geofenceTransition.toString())
-            // Test that the reported transition was of interest.
-            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-
-                // Get the geofences that were triggered. A single event can trigger
-                // multiple geofences.
-
-                // Send notification and log the transition details.
-
-
-            } else {
-            }
-        }
-    }
 
 }
+
 

@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.ciu196.android.heartbeat.HeartrateFragment
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 
@@ -37,4 +36,32 @@ import com.google.android.gms.location.GeofencingEvent
  */
 
 
+class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
+
+    // ...
+    override fun onReceive(context: Context?, intent: Intent?) {
+        val geofencingEvent = GeofencingEvent.fromIntent(intent)
+        if (geofencingEvent.hasError()) {
+            val errorMessage = errorMessage(context!!,geofencingEvent.errorCode)
+            Log.e(TAG, errorMessage)
+            return
+        }
+
+        // Get the transition type.
+        val geofenceTransition = geofencingEvent.geofenceTransition
+        Log.i(TAG, geofenceTransition.toString())
+        // Test that the reported transition was of interest.
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+
+            // Get the geofences that were triggered. A single event can trigger
+            // multiple geofences.
+
+            // Send notification and log the transition details.
+
+
+        } else {
+        }
+    }
+}
+private const val TAG = "GeofenceReceiver"

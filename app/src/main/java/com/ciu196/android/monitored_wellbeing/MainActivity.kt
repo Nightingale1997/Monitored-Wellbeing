@@ -36,7 +36,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ciu196.android.monitored_wellbeing.BuildConfig
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.databinding.ActivityHuntMainBinding
-import com.ciu196.android.heartbeat.HeartrateFragment.GeofenceBroadcastReceiver
+import com.example.android.geofence.GeofenceBroadcastReceiver
 import com.example.android.geofence.GeofenceViewModel
 import com.example.android.geofence.GeofencingConstants
 import com.google.android.gms.common.api.ResolvableApiException
@@ -71,7 +71,13 @@ class MainActivity : AppCompatActivity() {
 
     // A PendingIntent for the Broadcast Receiver that handles geofence transitions.
 
-
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
+        intent.action = MainActivity.ACTION_GEOFENCE_EVENT
+        // Use FLAG_UPDATE_CURRENT so that you get the same pending intent back when calling
+        // addGeofences() and removeGeofences().
+        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
