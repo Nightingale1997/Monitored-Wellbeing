@@ -79,5 +79,19 @@
         <action
             android:id="@+id/action_shopFragment_to_pointsFragment"
             app:destination="@id/pointsFragment" />
+        <action
+            android:id="@+id/action_shopFragment_to_shopItemFragment"
+            app:destination="@id/shopItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopItemFragment"
+        android:name="com.ciu196.android.shop.ShopItemFragment"
+        android:label="ShopItemFragment" >
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_shopItemFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
     </fragment>
 </navigation>

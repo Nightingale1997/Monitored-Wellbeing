@@ -22,9 +22,10 @@
 
     <!-- Start of the visible fragment layout using ConstraintLayout -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shopItemScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shop_background">
+        android:background="@drawable/shopitem_background">
 
         <TextView
             android:id="@+id/exit"
@@ -39,43 +40,77 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/itemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="@string/currentPoint"
-            android:textColor="@color/blueText"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="300dp"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/itemDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TestTitle" />
+
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="100dp"
+            android:text="TextView"
+            android:textColor="@color/white"
             android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/claimButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemDescription" />
+
+        <TextView
+            android:id="@+id/itemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/itemPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemTitle" />
+
+        <Button
+            android:id="@+id/claimButton"
+            android:layout_width="418dp"
+            android:layout_height="65dp"
+            android:background="@drawable/button_gradient"
+            android:text="@string/claimDisabled"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/priceCheck"
+            android:layout_width="46dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="175dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/claimButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintStart_toEndOf="@+id/itemPrice"
+            app:layout_constraintTop_toBottomOf="@+id/itemDescription"
+            app:srcCompat="@drawable/checkfailed" />
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="278dp"
+            android:layout_height="243dp"
+            android:layout_marginTop="75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/available"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="36sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="414dp"
-            android:layout_height="556dp"
-            android:layout_marginTop="35dp"
-            android:columnWidth="110dp"
-            android:gravity="center"
-            android:horizontalSpacing="0dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/available" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

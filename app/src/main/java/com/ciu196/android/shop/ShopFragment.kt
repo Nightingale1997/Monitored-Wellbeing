@@ -75,8 +75,8 @@ class ShopFragment : Fragment() {
         gv.setAdapter(ImageAdapter(requireActivity()))
         gv.onItemClickListener =
             OnItemClickListener { parent, v, position, id ->
-                Toast.makeText(requireActivity(), "Image Position: $position", Toast.LENGTH_SHORT)
-                    .show()
+                val action = ShopFragmentDirections.actionShopFragmentToShopItemFragment(position)
+                findNavController().navigate(action)
             }
         /*binding.navigationChallenges.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()

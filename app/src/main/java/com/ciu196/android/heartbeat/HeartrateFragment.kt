@@ -101,7 +101,36 @@ class HeartrateFragment : Fragment() {
      */
 
 
+    class GeofenceBroadcastReceiver : BroadcastReceiver() {
 
+
+        // ...
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val geofencingEvent = GeofencingEvent.fromIntent(intent)
+            if (geofencingEvent.hasError()) {
+                val errorMessage = errorMessage(context!!,geofencingEvent.errorCode)
+                Log.e(TAG, errorMessage)
+                return
+            }
+
+            // Get the transition type.
+            val geofenceTransition = geofencingEvent.geofenceTransition
+            Log.i(TAG, geofenceTransition.toString())
+            // Test that the reported transition was of interest.
+            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+
+                if(geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER){
+                    //binding.locationCheck.setImageResource(R.drawable.checkpassed)
+                }
+                else{
+                    //binding.locationCheck.setImageResource(R.drawable.checkfailed)
+                }
+
+
+            } else {
+            }
+        }
+    }
 
 
 }
