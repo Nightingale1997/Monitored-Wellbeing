@@ -1,18 +1,42 @@
 package com.ciu196.android.heartbeat
 
 import android.Manifest
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ciu196.android.monitored_wellbeing.LoginViewModel
+import com.ciu196.android.monitored_wellbeing.MainActivity
+import com.ciu196.android.monitored_wellbeing.PointsFragmentDirections
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.databinding.FragmentHeartrateBinding
+import com.example.android.geofence.errorMessage
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingEvent
 import com.google.firebase.auth.FirebaseAuth
 
 class HeartrateFragment : Fragment() {
+
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(requireActivity(), GeofenceBroadcastReceiver::class.java)
+        intent.action = MainActivity.ACTION_GEOFENCE_EVENT
+        // Use FLAG_UPDATE_CURRENT so that you get the same pending intent back when calling
+        // addGeofences() and removeGeofences().
+        PendingIntent.getBroadcast(requireActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+    companion object {
+        const val TAG = "heartrateFragment"
+    }
+
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
@@ -37,6 +61,12 @@ class HeartrateFragment : Fragment() {
             val action = ChallengeFragmentDirections.actionChallengeFragmentToMainActivity();
             findNavController().navigate(action)
         }*/
+
+        binding.exit.setOnClickListener {
+            val action = HeartrateFragmentDirections.actionHeartrateFragmentToChallengeFragment()
+            findNavController().navigate(action)
+        }
+
         return binding.root
     }
 
@@ -61,11 +91,51 @@ class HeartrateFragment : Fragment() {
         analyzer = OutputAnalyzer(requireActivity())
     }
 
-
+    fun checkimage(code : Int){
+    Log.i(TAG, "beep")
+    val test: HeartrateFragment =
+        requireActivity().supportFragmentManager.findFragmentByTag("heartrateFragment") as HeartrateFragment
+    if (test != null && test.isVisible()) {
+        Log.i(TAG, "boop")
+        //DO STUFF
+    }
+}
     /**
      * Observes the authentication state and changes the UI accordingly.
      * If there is a logged in user: (1) show a logout button and (2) display their name.
      * If there is no logged in user: show a login button
      */
+
+
+
+    class GeofenceBroadcastReceiver : BroadcastReceiver() {
+
+
+        // ...
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val geofencingEvent = GeofencingEvent.fromIntent(intent)
+            if (geofencingEvent.hasError()) {
+                val errorMessage = errorMessage(context!!,geofencingEvent.errorCode)
+                Log.e(TAG, errorMessage)
+                return
+            }
+
+            // Get the transition type.
+            val geofenceTransition = geofencingEvent.geofenceTransition
+            Log.i(TAG, geofenceTransition.toString())
+            // Test that the reported transition was of interest.
+            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+
+                // Get the geofences that were triggered. A single event can trigger
+                // multiple geofences.
+
+                // Send notification and log the transition details.
+
+
+            } else {
+            }
+        }
+    }
+
 }
 

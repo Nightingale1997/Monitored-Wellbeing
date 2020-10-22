@@ -5,7 +5,7 @@ import android.app.Activity
 import android.os.CountDownTimer
 import android.view.TextureView
 import android.view.View
-import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.Utils
@@ -17,6 +17,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
+
 
 internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureView);
     (private val activity: Activity) {
@@ -55,6 +56,8 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
 
     fun measurePulse(textureView: TextureView, cameraService: CameraService) {
 
+        var bpmCheck = false;
+
         // 20 times a second, get the amount of red on the picture.
         // detect local minimums, calculate pulse.
         store = MeasureStore()
@@ -90,23 +93,15 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
                         detectedValleys = detectedValleys + 1
                         valleys.add(store!!.lastTimestamp.time)
                         // in 13 seconds (13000 milliseconds), I expect 15 valleys. that would be a pulse of 15 / 130000 * 60 * 1000 = 69
-                        val currentValue = String.format(
-                            Locale.getDefault(),
-                            activity.resources.getQuantityString(
-                                R.plurals.measurement_output_template,
-                                detectedValleys
-                            ),
-                            if (valleys.size == 1) 60f * detectedValleys / Math.max(
-                                1f,
-                                (measurementLength - millisUntilFinished - clipLength) / 1000f
-                            ) else 60f * (detectedValleys - 1) / Math.max(
-                                1f,
-                                (valleys[valleys.size - 1] - valleys[0]) / 1000f
-                            ),
-                            detectedValleys,
-                            1f * (measurementLength - millisUntilFinished - clipLength) / 1000f
+                        val bpm = 60f * (detectedValleys - 1) / Math.max(
+                            1f,
+                            (valleys[valleys.size - 1] - valleys[0]) / 1000f
                         )
-                        (activity.findViewById<View>(R.id.textView) as TextView).text = currentValue
+
+                        activity.runOnUiThread(Runnable {
+                            (activity.findViewById<View>(R.id.bpm) as TextView).text = bpm.toInt().toString()
+                        })
+
                     }
                 })
                 thread.start()
@@ -129,29 +124,8 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
                     detectedValleys - 1,
                     1f * (valleys[valleys.size - 1] - valleys[0]) / 1000f
                 )
-                if (bpm < 80) {
-                    currentValue += "Failed $bpm"
-                }
-                else{
-                    val database = Firebase.database.getReference()
 
-                    database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
-                        object : ValueEventListener {
-                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                val user: User? = dataSnapshot.getValue(User::class.java)
-                                if (user != null){
-                                    val name: String? = user.name // "John Doe"
-                                    val points: Int? = user.points // "Texas"
-                                    Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, points!!+100)
-                                }
-
-
-                            }
-
-                            override fun onCancelled(databaseError: DatabaseError) {}
-                        })
-                }
-                (activity.findViewById<View>(R.id.textView) as TextView).text = currentValue
+                (activity.findViewById<View>(R.id.bpm) as TextView).text = bpm.toInt().toString()
                 val returnValueSb = StringBuilder()
                 returnValueSb.append(currentValue)
                 returnValueSb.append(activity.getString(R.string.row_separator))
@@ -196,10 +170,35 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
 
 
 
-                (activity.findViewById<View>(R.id.editText) as EditText).setText(
-                    returnValueSb.toString()
+                (activity.findViewById<View>(R.id.bpm) as TextView).setText(
+                    bpm.toInt().toString()
                 )
-                cameraService.stop()
+
+                if (bpm < 80) {
+                    measurePulse(textureView, cameraService)
+                }
+                else{
+                    cameraService.stop()
+                    val checkIcon = activity.findViewById<View>(R.id.heartrateCheck) as ImageView
+                    checkIcon.setImageResource(R.drawable.checkpassed)
+                    val database = Firebase.database.getReference()
+
+                    database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
+                        object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                val user: User? = dataSnapshot.getValue(User::class.java)
+                                if (user != null){
+                                    val name: String? = user.name // "John Doe"
+                                    val points: Int? = user.points // "Texas"
+                                    Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, points!!+100)
+                                }
+
+
+                            }
+
+                            override fun onCancelled(databaseError: DatabaseError) {}
+                        })
+                }
             }
         }
         timer!!.start()

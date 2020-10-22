@@ -15,7 +15,7 @@ import com.ciu196.android.monitored_wellbeing.LoginViewModel
 import com.ciu196.android.monitored_wellbeing.PointsFragmentDirections
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.Utils
-import com.ciu196.android.monitored_wellbeing.databinding.FragmentShopBinding
+import com.ciu196.android.monitored_wellbeing.databinding.FragmentShopitemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,7 +25,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
-class ShopFragment : Fragment() {
+class ShopItemFragment : Fragment() {
     companion object {
         const val TAG = "PointsFragment"
     }
@@ -37,7 +37,7 @@ class ShopFragment : Fragment() {
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
-    private lateinit var binding: FragmentShopBinding
+    private lateinit var binding: FragmentShopitemBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -63,7 +63,7 @@ class ShopFragment : Fragment() {
             })
 
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_shop, container, false)
+            R.layout.fragment_shopitem, container, false)
 
         binding.exit.setOnClickListener {
             //val action = ChallengeFragmentDirections.actionChallengeFragmentToHeartrateFragment()
