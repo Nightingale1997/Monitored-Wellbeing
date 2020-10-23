@@ -1,12 +1,14 @@
 # Monitored Wellbeing
 
+[Portfolio Website](https://carolinexia97.wixsite.com/project-portfolio/home)
+
 Gym loyalty program app, get rewards for being active at a gym.
 
 This app will measure heartrate and location. Current version includes one geofence at Chalmers University of Technology, Campus Lindholmen, at Kuggen.
 
+The app uses SHA-1 encryption. There is an included credentials.json, but if the app still returns an error with "Code 10", please contact kevin.solovjov@gmail.com with your SHA1 key (Most easily found in Android Studio, in the gradle tab on the right under Monitored-Wellbeing > android > signinReport) so it can be approved ASAP.
 
 
-[Portfolio Website](https://carolinexia97.wixsite.com/project-portfolio/home)
 ## Physical Device
 Tested and working on OnePlus 6
 
