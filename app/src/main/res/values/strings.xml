@@ -152,4 +152,6 @@
     <string name="seconds_length">%d seconds on %s</string>
     <string name="claim">Claim</string>
     <string name="claimDisabled">Can\'t afford</string>
+    <string name="submit">Submit</string>
+    <string name="submit_disabled">Fulfill criteria</string>
 </resources>

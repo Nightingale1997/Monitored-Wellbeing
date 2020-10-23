@@ -99,5 +99,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/checkfailed" />
 
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="411dp"
+            android:layout_height="55dp"
+            android:background="@drawable/button_gradient"
+            android:text="@string/submit_disabled"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -44,7 +44,7 @@ class HeartrateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-   
+
         cameraService = CameraService(requireActivity())
 
         //setContentView(R.layout.activity_main2)
@@ -65,7 +65,7 @@ class HeartrateFragment : Fragment() {
             val action = HeartrateFragmentDirections.actionHeartrateFragmentToChallengeFragment()
             findNavController().navigate(action)
         }
-
+        binding.submitButton.setEnabled(false)
         database = Firebase.database.getReference()
 
         database.child("users").child("GEOFENCE").addValueEventListener(
@@ -77,6 +77,11 @@ class HeartrateFragment : Fragment() {
                         Log.i(TAG, "Points: " + points.toString())
                         if(points == 1){
                             binding.locationCheck.setImageResource(R.drawable.checkpassed)
+                            if(binding.heartrateCheck.getDrawable().getConstantState() ==
+                                getResources().getDrawable(R.drawable.checkpassed).getConstantState()){
+                                binding.submitButton.setEnabled(true)
+                                binding.submitButton.text="Submit"
+                            }
                         }
                         else if(points == 2){
                             binding.locationCheck.setImageResource(R.drawable.checkfailed)
@@ -88,6 +93,31 @@ class HeartrateFragment : Fragment() {
 
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
+
+        binding.submitButton.setOnClickListener {
+
+            val database = Firebase.database.getReference()
+
+            database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val user: User? = dataSnapshot.getValue(User::class.java)
+                        if (user != null){
+                            val name: String? = user.name // "John Doe"
+                            val points: Int? = user.points // "Texas"
+                            Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, points!!+100)
+                        }
+
+
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {}
+                })
+
+            val action = HeartrateFragmentDirections.actionHeartrateFragmentToChallengeFragment()
+            findNavController().navigate(action)
+        }
+
 
         return binding.root
     }

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.os.CountDownTimer
 import android.view.TextureView
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.ciu196.android.monitored_wellbeing.R
@@ -181,23 +182,15 @@ internal class OutputAnalyzer //this.chartDrawer = new ChartDrawer(graphTextureV
                     cameraService.stop()
                     val checkIcon = activity.findViewById<View>(R.id.heartrateCheck) as ImageView
                     checkIcon.setImageResource(R.drawable.checkpassed)
-                    val database = Firebase.database.getReference()
 
-                    database.child("users").child(FirebaseAuth.getInstance().currentUser!!.uid).addListenerForSingleValueEvent(
-                        object : ValueEventListener {
-                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                val user: User? = dataSnapshot.getValue(User::class.java)
-                                if (user != null){
-                                    val name: String? = user.name // "John Doe"
-                                    val points: Int? = user.points // "Texas"
-                                    Utils.writeNewUser( FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.displayName!!, points!!+100)
-                                }
+                    val location = activity.findViewById<View>(R.id.locationCheck) as ImageView
+                    if(location.getDrawable().getConstantState() ==
+                        activity.getResources().getDrawable(R.drawable.checkpassed).getConstantState()){
+                        val submit = activity.findViewById<View>(R.id.submitButton) as Button
+                        submit.setEnabled(true)
+                        submit.text="Submit"
+                    }
 
-
-                            }
-
-                            override fun onCancelled(databaseError: DatabaseError) {}
-                        })
                 }
             }
         }

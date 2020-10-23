@@ -63,10 +63,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
 
-        binding.settingsButton.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToSettingsFragment()
-            navController.navigate(action)
-        }
 
         // Observe the authentication state so we can know if the user has logged in successfully.
         // If the user has logged in successfully, bring them back to the home screen.
@@ -100,7 +96,6 @@ class MainFragment : Fragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
 
                     binding.authButton.text = getString(R.string.logout_button_text)
                     binding.authButton.setOnClickListener {
@@ -108,7 +103,6 @@ class MainFragment : Fragment() {
                     }
                 }
                 else -> {
-                    binding.welcomeText.text = factToDisplay
 
                     binding.authButton.text = getString(R.string.login_button_text)
                     binding.authButton.setOnClickListener {
