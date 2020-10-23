@@ -1,28 +1,32 @@
 package com.ciu196.android.heartbeat
 
+import User
 import android.Manifest
-import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.Surface
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.ciu196.android.monitored_wellbeing.LoginViewModel
-import com.ciu196.android.monitored_wellbeing.MainActivity
-import com.ciu196.android.monitored_wellbeing.PointsFragmentDirections
 import com.ciu196.android.monitored_wellbeing.R
+import com.ciu196.android.monitored_wellbeing.Utils
 import com.ciu196.android.monitored_wellbeing.databinding.FragmentHeartrateBinding
-import com.example.android.geofence.errorMessage
-import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingEvent
+import com.example.android.geofence.GeofenceBroadcastReceiver
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+
 
 class HeartrateFragment : Fragment() {
 
@@ -30,7 +34,7 @@ class HeartrateFragment : Fragment() {
     companion object {
         const val TAG = "heartrateFragment"
     }
-
+    private lateinit var database: DatabaseReference
 
     // Get a reference to the ViewModel scoped to this Fragment
     private val viewModel by viewModels<LoginViewModel>()
@@ -40,6 +44,7 @@ class HeartrateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+   
         cameraService = CameraService(requireActivity())
 
         //setContentView(R.layout.activity_main2)
@@ -60,6 +65,29 @@ class HeartrateFragment : Fragment() {
             val action = HeartrateFragmentDirections.actionHeartrateFragmentToChallengeFragment()
             findNavController().navigate(action)
         }
+
+        database = Firebase.database.getReference()
+
+        database.child("users").child("GEOFENCE").addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val user: User? = dataSnapshot.getValue(User::class.java)
+                    if (user != null){
+                        val points: Int? = user.points // "Texas"
+                        Log.i(TAG, "Points: " + points.toString())
+                        if(points == 1){
+                            binding.locationCheck.setImageResource(R.drawable.checkpassed)
+                        }
+                        else if(points == 2){
+                            binding.locationCheck.setImageResource(R.drawable.checkfailed)
+                        }
+
+                    }
+
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
+            })
 
         return binding.root
     }
@@ -99,39 +127,6 @@ class HeartrateFragment : Fragment() {
      * If there is a logged in user: (1) show a logout button and (2) display their name.
      * If there is no logged in user: show a login button
      */
-
-
-    class GeofenceBroadcastReceiver : BroadcastReceiver() {
-
-
-        // ...
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val geofencingEvent = GeofencingEvent.fromIntent(intent)
-            if (geofencingEvent.hasError()) {
-                val errorMessage = errorMessage(context!!,geofencingEvent.errorCode)
-                Log.e(TAG, errorMessage)
-                return
-            }
-
-            // Get the transition type.
-            val geofenceTransition = geofencingEvent.geofenceTransition
-            Log.i(TAG, geofenceTransition.toString())
-            // Test that the reported transition was of interest.
-            if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER || geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-
-                if(geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER){
-                    //binding.locationCheck.setImageResource(R.drawable.checkpassed)
-                }
-                else{
-                    //binding.locationCheck.setImageResource(R.drawable.checkfailed)
-                }
-
-
-            } else {
-            }
-        }
-    }
-
 
 }
 

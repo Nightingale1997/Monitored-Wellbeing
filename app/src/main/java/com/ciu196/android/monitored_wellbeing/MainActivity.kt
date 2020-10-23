@@ -36,7 +36,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.ciu196.android.monitored_wellbeing.BuildConfig
 import com.ciu196.android.monitored_wellbeing.R
 import com.ciu196.android.monitored_wellbeing.databinding.ActivityHuntMainBinding
-import com.ciu196.android.heartbeat.HeartrateFragment.GeofenceBroadcastReceiver
+import com.example.android.geofence.GeofenceBroadcastReceiver
+
 import com.example.android.geofence.GeofenceViewModel
 import com.example.android.geofence.GeofencingConstants
 import com.google.android.gms.common.api.ResolvableApiException
@@ -169,6 +170,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         removeGeofences()
+        Utils.writeNewUser( "GEOFENCE", "STATE", 0)
     }
 
     /**
