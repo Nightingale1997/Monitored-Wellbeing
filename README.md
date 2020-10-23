@@ -16,7 +16,7 @@ The app requires a working camera and flash to run correctly. If testing outside
 
 ## Emulator
 
-Tested on Emulated Nexus 4
+Tested on Emulated Nexus 4, please use the Nexus 4 Branch for emulating with this device.
 
 Heartrate measuring is difficult on an emulator. It is possible to press the ALT key (On Windows) to move the camera and "trick" the app into measuring the simulated image. There is a known issue where the app encounters an error if the camera is not moved at all in an emulator.
 
